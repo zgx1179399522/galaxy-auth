@@ -40,4 +40,9 @@ public class SysUserService {
 
         repo.save(sysUser);
     }
+
+
+    public void delete(Long id){
+        repo.deleteById(id);
+    }
 }

@@ -1,8 +1,10 @@
 package com.web.config;
 
-import com.web.service.ShiroService;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,15 +18,31 @@ import java.util.LinkedHashMap;
 @Configuration
 public class ShiroConfiguration {
 
+    //SpringBoot解决Shiro导致依赖注入的bean事务失效问题
+
     @Bean
-    public DefaultWebSecurityManager securityManager(ShiroRealm realm) {
+    public DefaultWebSessionManager sessionManager() {
+        DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        return defaultWebSessionManager;
+    }
+
+
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+
+    @Bean
+    public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(realm);
+//        defaultWebSecurityManager.setSessionManager(sessionManager);
         return defaultWebSecurityManager;
     }
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager, ShiroService shiroService) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
         LinkedHashMap<String, Filter> map = new LinkedHashMap<>();
@@ -33,9 +51,14 @@ public class ShiroConfiguration {
 
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setFilters(map);
-
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroService.load());
+//        shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroService.load());
 
         return shiroFilterFactoryBean;
     }
+
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
 }

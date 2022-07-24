@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 9090
 
 spring:
   datasource:
@@ -7,6 +7,8 @@ spring:
     url: jdbc:mysql://localhost:3306/shiro
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  aop:
+    proxy-target-class: true
   jpa:
     show-sql: true
     hibernate:

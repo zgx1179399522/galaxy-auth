@@ -54,12 +54,13 @@ public class ShiroService {
             stringBuilder.append("]");
             map.put(url, stringBuilder.toString());
         });
+        map.put("/**", "auths");
         return map;
     }
 
 
 
-    public void updatePermission(ShiroFilterFactoryBean shiroFilterFactoryBean, Integer roleId, Boolean isRemoveSession) {
+    public void updatePermission(ShiroFilterFactoryBean shiroFilterFactoryBean) {
         synchronized (this) {
             AbstractShiroFilter shiroFilter = new ShiroFilter();
             try {
@@ -81,11 +82,6 @@ public class ShiroService {
             Map<String, String> chains = shiroFilterFactoryBean.getFilterChainDefinitionMap();
             for (Map.Entry<String, String> entry : chains.entrySet()) {
                 manager.createChain(entry.getKey(), entry.getValue());
-            }
-
-            // 动态更新该角色相关联的用户shiro权限
-            if (roleId != null) {
-                updatePermissionByRoleId(roleId, isRemoveSession);
             }
         }
     }
