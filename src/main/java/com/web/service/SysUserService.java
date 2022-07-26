@@ -1,7 +1,7 @@
 package com.web.service;
 
+import com.web.entity.SysRole;
 import com.web.entity.SysUser;
-import com.web.entity.SysUserRole;
 import com.web.repo.SysUserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class SysUserService {
                 .username(username)
                 .password(password)
                 .roles(Collections.singletonList(
-                        SysUserRole.builder()
+                        SysRole.builder()
                                 .id(2L)
                                 .build()
                 ))

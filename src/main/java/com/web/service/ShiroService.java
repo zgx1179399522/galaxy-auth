@@ -1,7 +1,7 @@
 package com.web.service;
 
-import com.web.entity.SysUrlRole;
-import com.web.entity.SysUserRole;
+import com.web.entity.SysRole;
+import com.web.entity.SysUrl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -42,13 +42,13 @@ public class ShiroService {
         map.put("/sys/login", "anon");
         map.put("/sys/logout", "anon");
 
-        List<SysUrlRole> sysUrlRoles = sysUrlRoleService.findAll();
+        List<SysUrl> sysUrls = sysUrlRoleService.findAll();
 
-        sysUrlRoles.forEach(sysUrlRole -> {
-            List<SysUserRole> roles = sysUrlRole.getRoles();
-            String url = sysUrlRole.getUrl();
+        sysUrls.forEach(sysUrl -> {
+            List<SysRole> roles = sysUrl.getRoles();
+            String url = sysUrl.getUrl();
             StringBuilder stringBuilder = new StringBuilder("auths,sRoles[");
-            List<String> list = roles.stream().map(SysUserRole::getRoleCode).collect(Collectors.toList());
+            List<String> list = roles.stream().map(SysRole::getRoleCode).collect(Collectors.toList());
             String string = StringUtils.collectionToDelimitedString(list, ",");
             stringBuilder.append(string);
             stringBuilder.append("]");

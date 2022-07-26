@@ -1,6 +1,6 @@
 package com.web.service;
 
-import com.web.entity.SysUserRole;
+import com.web.entity.SysRole;
 import com.web.repo.SysUserRoleRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class SysUserRoleService {
     private final SysUserRoleRepo repo;
 
     public void create(String roleCode, String roleName) {
-        SysUserRole userRole = SysUserRole.builder()
+        SysRole userRole = SysRole.builder()
                 .roleCode(roleCode)
                 .roleName(roleName)
                 .build();

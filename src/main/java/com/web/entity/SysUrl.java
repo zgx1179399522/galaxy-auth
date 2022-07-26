@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @Author zhang guoxiang
@@ -16,16 +17,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "sys_user_role")
-public class SysUserRole {
+@Table(name = "sys_url")
+public class SysUrl {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "role_code")
-    private String roleCode;
+    private String url;
 
-    @Column(name = "role_name")
-    private String roleName;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "url_role",joinColumns = @JoinColumn(name = "url_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<SysRole> roles;
 }

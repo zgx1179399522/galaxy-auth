@@ -23,6 +23,10 @@ public class ShiroConfiguration {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager defaultWebSessionManager = new DefaultWebSessionManager();
+        //设置session超时时间
+        defaultWebSessionManager.setGlobalSessionTimeout(30000);
+        defaultWebSessionManager.setDeleteInvalidSessions(true);
+        defaultWebSessionManager.setSessionValidationSchedulerEnabled(true);
         return defaultWebSessionManager;
     }
 
@@ -37,7 +41,6 @@ public class ShiroConfiguration {
     @Bean
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-//        defaultWebSecurityManager.setSessionManager(sessionManager);
         return defaultWebSecurityManager;
     }
 
@@ -51,7 +54,6 @@ public class ShiroConfiguration {
 
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setFilters(map);
-//        shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroService.load());
 
         return shiroFilterFactoryBean;
     }

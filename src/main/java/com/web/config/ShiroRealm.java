@@ -1,8 +1,8 @@
 package com.web.config;
 
 
+import com.web.entity.SysRole;
 import com.web.entity.SysUser;
-import com.web.entity.SysUserRole;
 import com.web.exception.UserNotFoundException;
 import com.web.exception.UserPassWordErrorException;
 import com.web.service.SysUserService;
@@ -32,7 +32,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SysUser sysUser = (SysUser) principalCollection.getPrimaryPrincipal();
 
-        List<String> roles = sysUser.getRoles().stream().map(SysUserRole::getRoleCode).collect(Collectors.toList());
+        List<String> roles = sysUser.getRoles().stream().map(SysRole::getRoleCode).collect(Collectors.toList());
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRoles(roles);
