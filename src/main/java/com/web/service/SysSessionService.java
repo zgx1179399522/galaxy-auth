@@ -37,4 +37,8 @@ public class SysSessionService {
     public List<SysSession> findAll(){
         return repo.findAll();
     }
+
+    public void deleteAll(){
+        repo.deleteAll();
+    }
 }

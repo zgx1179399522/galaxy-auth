@@ -4,7 +4,7 @@ import com.web.JsonUtils;
 import com.web.constant.PageResult;
 import com.web.constant.PageResults;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
+import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -15,7 +15,7 @@ import java.io.IOException;
  * @Author zhang guoxiang
  * @Date 2022/7/9
  */
-public class ShiroRoleFilter extends RolesAuthorizationFilter {
+public class ShiroRoleFilter extends AuthorizationFilter {
 
 
     @Override
